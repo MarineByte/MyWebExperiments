@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Medejas ver tu video? porfavor</title>
+  <style>
+    /* Estilos generales */
+    body, html {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background-color: #726d6d;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      background-color: #FFFFFF;
+      width: 80%;
+      max-width: 90vw;
+      height: 70vh;
+      margin: 20px auto;
+      padding: 2em;
+      border: 1px solid;
+      border-radius: 20px;
+      text-align: center;
+      position: relative;
+    }
+    /* Adaptación para dispositivos móviles */
+    @media (max-width: 600px) {
+      .container {
+        width: 95%;
+        padding: 1em;
+      }
+      label.button {
+        width: 90%;
+        padding: 15px;
+        font-size: 34px;
+        line-height: normal;
+      }
+      .botones {
+        flex-direction: column;
+      }
+    }
+    /* Ocultamos ambos contenedores por defecto */
+    #container1,
+    #container2 {
+      display: none;
+    }
+    /* Mostramos el contenedor según el radio de slide seleccionado */
+    #slide1:checked ~ #container1 {
+      display: block;
+    }
+    #slide2:checked ~ #container2 {
+      display: block;
+    }
+    /* Estilos para los botones */
+    label.button {
+      color: #FFFFFF;
+      padding: .5vh 1vh;
+      margin: 25px 0;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 2.5vh;
+      border: 1px solid black;
+      width: 28vw;
+      height: 3vh;
+      filter: drop-shadow(2px 4px 6px black);
+      text-align: center;
+      user-select: none;
+    }
+    /* Quitamos el outline para evitar el recuadro negro al enfocar */
+    label.button:focus,
+    label.button:active {
+      outline: none;
+    }
+    /* Ocultamos los inputs radio para que no se vean */
+    input[type="radio"] {
+      display: none;
+    }
+    /* Contenedor para los botones en la pantalla 1 */
+    .botones {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px;
+    }
+    /* Botones “No” dinámicos (por defecto ocultos) */
+    .no-button {
+      display: none;
+      background-color: #e92b2b;
+    }
+    /* Botón “Sí” */
+    .si-button {
+      background-color: #7af7cd;
+    }
+    /* Estado 1 (noCycle = no1): se muestra el primer botón “No” en línea (posición normal) */
+    #no1:checked ~ #container1 .no1 {
+      display: inline-block;
+      position: absolute;
+      transform: none;
+      z-index: 10;
+      left: 55%;
+    }
+    /* Estado 2: botón “No” reposicionado (por ejemplo, arriba a la derecha) */
+    #no2:checked ~ #container1 .no2 {
+      display: inline-block;
+      position: absolute;
+      top: 40%;
+      right: 30%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+    /* Estado 3: botón “No” reposicionado (por ejemplo, abajo, centrado) */
+    #no3:checked ~ #container1 .no3 {
+      display: inline-block;
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translate(-50%, 50%);
+      z-index: 10;
+    }
+    /* Estado 4: botón “No” reposicionado (por ejemplo, abajo a la derecha) */
+    #no4:checked ~ #container1 .no4 {
+      display: inline-block;
+      position: absolute;
+      bottom: 50%;
+      right: 30%;
+      transform: translate(50%, 50%);
+      z-index: 10;
+    }
+    /* Estilo para la imagen final */
+    .happy-cat {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <input type="radio" name="slides" id="slide1" checked>
+  <input type="radio" name="slides" id="slide2">
+  <input type="radio" name="noCycle" id="no1" checked>
+  <input type="radio" name="noCycle" id="no2">
+  <input type="radio" name="noCycle" id="no3">
+  <input type="radio" name="noCycle" id="no4">
+  <div id="container1" class="container">
+    <div style="margin-top: 5vh;">
+      <h1 style="font-size: 2.5vh;">Ojitos ¿me dejas ver tu video, por fa?</h1>
+    </div>
+    <div class="botones">
+      <label for="slide2" class="button si-button">Sí</label>
+      <label for="no2" class="button no-button no1">No</label>
+    </div>
+    <div id="mensaje-no" style="text-align: center; font-size: 2vh; margin-top: 10px;"></div>
+    <div style="display: flex; justify-content: center;">
+      <img width="700" height="700" style="border-radius: 10px;" src="https://i.pinimg.com/736x/d6/e0/2f/d6e02f731a5a19af355bc70e609d9e66.jpg" alt="Gato">
+    </div>
+    <label for="no3" class="button no-button no2">No</label>
+    <label for="no4" class="button no-button no3">No</label>
+    <label for="no1" class="button no-button no4">No</label>
+  </div>
+  <div id="container2" class="container">
+    <div style="display: flex; justify-content: center;">
+      <img width="700" height="700" class="happy-cat" src="https://i.pinimg.com/originals/cf/62/16/cf6216cfaf2809db615728fada078f72.gif" alt="Gato Feliz">
+    </div>
+    <h1 style="font-size: 2.5vh;">Fácil, ¿verdad?<br> No es tan difícil ser civilizado </h1>
+  </div>
+  <script>
+    const mensajesNo = [
+      "¿Segura? Piensa bien tu respuesta.",
+      "Considera mi pequeño esfuerzo...",
+      "Vamos ojitos, di que sí.",
+      "No me hagas rogar -_-",
+      "Sabes que tarde o temprano dirás que sí 👀.",
+      "Mira que me estoy esforzando, eh...",
+      "No puedes decir que no para siempre...",
+      "Mira ese perrito, ¿de verdad puedes negarte?",
+      "No es un botón para ver series coreanas.",
+      "Cada vez es más difícil decir no, ¿verdad?"
+    ];
+    const botonesNo = document.querySelectorAll(".no-button");
+    const mensajeDiv = document.getElementById("mensaje-no");
+    function cambiarMensaje() {
+      mensajeDiv.textContent = mensajesNo[Math.floor(Math.random() * mensajesNo.length)];
+    }
+    botonesNo.forEach(boton => boton.addEventListener("click", cambiarMensaje));
+  </script>
+</body>
+</html>
